@@ -161,7 +161,7 @@ export default class LeaveHistory extends React.Component<ILeaveHistoryProps, IL
         maxWidth: 120,
         isResizable: true,
         onRender: (item: ILeaveRequest) => (
-          <span className={`${styles.statusBadge} ${styles[item.ApprovalStatus.toLowerCase()]}`}>
+          <span className={`${styles.statusBadge} ${this.getStatusClass(item.ApprovalStatus)}`}>
             {item.ApprovalStatus}
           </span>
         )
