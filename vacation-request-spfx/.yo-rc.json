@@ -1,0 +1,22 @@
+{
+  "@microsoft/generator-sharepoint": {
+    "whichFolder": "subdir",
+    "solutionName": "vacation-request-spfx",
+    "environment": "spo",
+    "packageManager": "npm",
+    "skipFeatureDeployment": true,
+    "template": "react",
+    "componentName": "LeaveRequestForm",
+    "componentDescription": "Team Leave/Vacation Request and Calendar Solution",
+    "plusBeta": false,
+    "isCreatingSolution": true,
+    "nodeVersion": "22.14.0",
+    "sdksVersions": {},
+    "version": "1.21.1",
+    "libraryName": "vacation-request-spfx",
+    "libraryId": "016cb81e-08a0-4208-889b-700f63fbd50d",
+    "solutionShortDescription": "vacation-request-spfx description",
+    "isDomainIsolated": false,
+    "componentType": "webpart"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "vacation-request-spfx-client-side-solution",
+    "id": "016cb81e-08a0-4208-889b-700f63fbd50d",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true,
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "developer": {
+      "name": "",
+      "websiteUrl": "",
+      "privacyUrl": "",
+      "termsOfUseUrl": "",
+      "mpnId": "Undefined-1.21.1"
+    },
+    "metadata": {
+      "shortDescription": {
+        "default": "vacation-request-spfx description"
+      },
+      "longDescription": {
+        "default": "vacation-request-spfx description"
+      },
+      "screenshotPaths": [],
+      "videoUrl": "",
+      "categories": []
+    },
+    "features": [
+      {
+        "title": "vacation-request-spfx Feature",
+        "description": "The feature that activates elements of the vacation-request-spfx solution.",
+        "id": "8a8a1648-cb63-4a11-89d5-4688e9800541",
+        "version": "1.0.0.0"
+      }
+    ]
+  },
+  "paths": {
+    "zippedPackage": "solution/vacation-request-spfx.sppkg"
+  }
+}
