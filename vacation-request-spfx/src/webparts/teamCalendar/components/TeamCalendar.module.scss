@@ -1,34 +1,200 @@
 @import '~@fluentui/react/dist/sass/References.scss';
 
 .teamCalendar {
-  overflow: hidden;
-  padding: 1em;
   color: "[theme:bodyText, default: #323130]";
   color: var(--bodyText);
+  padding: 20px;
+  max-width: 100%;
+
   &.teams {
     font-family: $ms-font-family-fallbacks;
   }
-}
 
-.welcome {
-  text-align: center;
-}
+  .calendarContainer {
+    background: "[theme:bodyBackground, default: #ffffff]";
+    background: var(--bodyBackground);
+    border: 1px solid "[theme:neutralLight, default: #edebe9]";
+    border: 1px solid var(--neutralLight);
+    border-radius: 4px;
+    padding: 16px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 
-.welcomeImage {
-  width: 100%;
-  max-width: 420px;
-}
+    // FullCalendar styling overrides
+    :global {
+      .fc {
+        font-family: $ms-font-family-fallbacks;
+      }
 
-.links {
-  a {
-    text-decoration: none;
-    color: "[theme:link, default:#03787c]";
-    color: var(--link); // note: CSS Custom Properties support is limited to modern browsers only
+      .fc-toolbar {
+        margin-bottom: 16px;
+      }
 
-    &:hover {
-      text-decoration: underline;
-      color: "[theme:linkHovered, default: #014446]";
-      color: var(--linkHovered); // note: CSS Custom Properties support is limited to modern browsers only
+      .fc-toolbar-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: "[theme:themePrimary, default: #0078d4]";
+        color: var(--themePrimary);
+      }
+
+      .fc-button {
+        background: "[theme:themePrimary, default: #0078d4]";
+        background: var(--themePrimary);
+        border-color: "[theme:themePrimary, default: #0078d4]";
+        border-color: var(--themePrimary);
+        color: white;
+        font-family: $ms-font-family-fallbacks;
+
+        &:hover {
+          background: "[theme:themeDark, default: #106ebe]";
+          background: var(--themeDark);
+          border-color: "[theme:themeDark, default: #106ebe]";
+          border-color: var(--themeDark);
+        }
+
+        &:disabled {
+          background: "[theme:neutralTertiary, default: #a19f9d]";
+          background: var(--neutralTertiary);
+          border-color: "[theme:neutralTertiary, default: #a19f9d]";
+          border-color: var(--neutralTertiary);
+        }
+      }
+
+      .fc-event {
+        border-radius: 3px;
+        font-size: 12px;
+        cursor: pointer;
+
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+
+      .fc-daygrid-event {
+        margin: 1px 2px;
+      }
+
+      .fc-event-title {
+        font-weight: 500;
+      }
+
+      .fc-day-today {
+        background: "[theme:themeLight, default: #deecf9]";
+        background: var(--themeLight);
+      }
+
+      .fc-col-header-cell {
+        background: "[theme:neutralLighter, default: #f3f2f1]";
+        background: var(--neutralLighter);
+        font-weight: 600;
+      }
+
+      .fc-scrollgrid {
+        border-color: "[theme:neutralLight, default: #edebe9]";
+        border-color: var(--neutralLight);
+      }
+
+      .fc-scrollgrid td,
+      .fc-scrollgrid th {
+        border-color: "[theme:neutralLight, default: #edebe9]";
+        border-color: var(--neutralLight);
+      }
+
+      .fc-more-link {
+        color: "[theme:themePrimary, default: #0078d4]";
+        color: var(--themePrimary);
+
+        &:hover {
+          color: "[theme:themeDark, default: #106ebe]";
+          color: var(--themeDark);
+        }
+      }
+
+      .fc-popover {
+        border-color: "[theme:neutralLight, default: #edebe9]";
+        border-color: var(--neutralLight);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .fc-popover-header {
+        background: "[theme:neutralLighter, default: #f3f2f1]";
+        background: var(--neutralLighter);
+        border-bottom-color: "[theme:neutralLight, default: #edebe9]";
+        border-bottom-color: var(--neutralLight);
+      }
     }
+  }
+
+  .filterSection {
+    background: "[theme:neutralLighterAlt, default: #faf9f8]";
+    background: var(--neutralLighterAlt);
+    border: 1px solid "[theme:neutralLight, default: #edebe9]";
+    border: 1px solid var(--neutralLight);
+    border-radius: 4px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+
+  .toolbarSection {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: flex-end;
+    margin-bottom: 16px;
+  }
+
+  .eventDetails {
+    .detailRow {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+
+      .label {
+        font-weight: 600;
+        color: "[theme:neutralPrimary, default: #323130]";
+        color: var(--neutralPrimary);
+      }
+
+      .value {
+        color: "[theme:neutralSecondary, default: #605e5c]";
+        color: var(--neutralSecondary);
+      }
+    }
+  }
+
+  .statusBadge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+
+    &.pending {
+      background: "[theme:warningLight, default: #fff4ce]";
+      background: var(--warningLight);
+      color: "[theme:warningDark, default: #797673]";
+      color: var(--warningDark);
+    }
+
+    &.approved {
+      background: "[theme:successLight, default: #dff6dd]";
+      background: var(--successLight);
+      color: "[theme:successDark, default: #107c10]";
+      color: var(--successDark);
+    }
+
+    &.rejected {
+      background: "[theme:errorLight, default: #fde7e9]";
+      background: var(--errorLight);
+      color: "[theme:errorDark, default: #a80000]";
+      color: var(--errorDark);
+    }
+  }
+
+  .loadingContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
   }
 }

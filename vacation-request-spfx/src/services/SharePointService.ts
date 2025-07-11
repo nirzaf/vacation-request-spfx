@@ -391,4 +391,61 @@ export class SharePointService {
       throw new Error('Failed to update leave request');
     }
   }
+
+  /**
+   * Get all leave requests (for calendar and admin views)
+   */
+  public async getAllLeaveRequests(): Promise<ILeaveRequest[]> {
+    try {
+      const items = await this.sp.web.lists
+        .getByTitle(LIST_NAMES.LEAVE_REQUESTS)
+        .items
+        .select(
+          'Id', 'Title', 'StartDate', 'EndDate', 'TotalDays', 'IsPartialDay', 'PartialDayHours',
+          'RequestComments', 'ApprovalStatus', 'ApprovalDate', 'ApprovalComments',
+          'SubmissionDate', 'Modified', 'AttachmentURL', 'NotificationsSent', 'Department',
+          'Requester/Id', 'Requester/Title', 'Requester/EMail',
+          'Manager/Id', 'Manager/Title', 'Manager/EMail',
+          'LeaveType/Id', 'LeaveType/Title'
+        )
+        .expand('Requester', 'Manager', 'LeaveType')
+        .orderBy('StartDate', false)();
+
+      return items.map((item: any) => ({
+        Id: item.Id,
+        Title: item.Title,
+        Requester: {
+          Id: item.Requester?.Id || 0,
+          Title: item.Requester?.Title || '',
+          EMail: item.Requester?.EMail || ''
+        },
+        Department: item.Department,
+        Manager: item.Manager ? {
+          Id: item.Manager.Id,
+          Title: item.Manager.Title,
+          EMail: item.Manager.EMail
+        } : undefined,
+        LeaveType: {
+          Id: item.LeaveType?.Id || 0,
+          Title: item.LeaveType?.Title || ''
+        },
+        StartDate: new Date(item.StartDate),
+        EndDate: new Date(item.EndDate),
+        TotalDays: item.TotalDays,
+        IsPartialDay: item.IsPartialDay,
+        PartialDayHours: item.PartialDayHours,
+        RequestComments: item.RequestComments,
+        ApprovalStatus: item.ApprovalStatus as ApprovalStatus,
+        ApprovalDate: item.ApprovalDate ? new Date(item.ApprovalDate) : undefined,
+        ApprovalComments: item.ApprovalComments,
+        SubmissionDate: new Date(item.SubmissionDate),
+        LastModified: new Date(item.Modified),
+        AttachmentURL: item.AttachmentURL,
+        NotificationsSent: item.NotificationsSent
+      }));
+    } catch (error) {
+      console.error('Error fetching all leave requests:', error);
+      throw new Error('Failed to fetch leave requests');
+    }
+  }
 }

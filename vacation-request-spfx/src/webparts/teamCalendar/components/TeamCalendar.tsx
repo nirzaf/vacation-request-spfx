@@ -1,7 +1,6 @@
 import * as React from 'react';
 import styles from './TeamCalendar.module.scss';
 import type { ITeamCalendarProps } from './ITeamCalendarProps';
-import { escape } from '@microsoft/sp-lodash-subset';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -13,7 +12,6 @@ import {
   Dropdown,
   IDropdownOption,
   DefaultButton,
-  PrimaryButton,
   MessageBar,
   MessageBarType,
   Spinner,
@@ -23,7 +21,7 @@ import {
   TextField,
   Toggle
 } from '@fluentui/react';
-import { SharePointService, GraphService } from '../../../services';
+import { SharePointService } from '../../../services';
 import {
   ILeaveRequest,
   ILeaveType,
@@ -63,14 +61,12 @@ interface ITeamCalendarState {
 
 export default class TeamCalendar extends React.Component<ITeamCalendarProps, ITeamCalendarState> {
   private sharePointService: SharePointService;
-  private graphService: GraphService;
   private calendarRef = React.createRef<FullCalendar>();
 
   constructor(props: ITeamCalendarProps) {
     super(props);
 
     this.sharePointService = new SharePointService(props.context);
-    this.graphService = new GraphService(props.context);
 
     this.state = {
       events: [],
@@ -261,3 +257,239 @@ export default class TeamCalendar extends React.Component<ITeamCalendarProps, IT
     link.click();
     document.body.removeChild(link);
   }
+
+  public render(): React.ReactElement<ITeamCalendarProps> {
+    const { hasTeamsContext } = this.props;
+    const {
+      events,
+      leaveTypes,
+      isLoading,
+      error,
+      currentView,
+      selectedEvent,
+      isPanelOpen,
+      filters
+    } = this.state;
+
+    if (isLoading) {
+      return (
+        <section className={`${styles.teamCalendar} ${hasTeamsContext ? styles.teams : ''}`}>
+          <Stack horizontalAlign="center" tokens={{ padding: 20 }}>
+            <Spinner size={SpinnerSize.large} label="Loading team calendar..." />
+          </Stack>
+        </section>
+      );
+    }
+
+    const viewOptions: IDropdownOption[] = [
+      { key: 'dayGridMonth', text: 'Month View' },
+      { key: 'timeGridWeek', text: 'Week View' },
+      { key: 'timeGridDay', text: 'Day View' },
+      { key: 'listWeek', text: 'List View' }
+    ];
+
+    const leaveTypeOptions: IDropdownOption[] = [
+      { key: 'all', text: 'All Leave Types' },
+      ...LeaveTypeUtils.toDropdownOptions(leaveTypes)
+    ];
+
+    return (
+      <section className={`${styles.teamCalendar} ${hasTeamsContext ? styles.teams : ''}`}>
+        <Stack tokens={{ childrenGap: 20 }}>
+          <Stack.Item>
+            <Text variant="xxLarge" as="h1">Team Leave Calendar</Text>
+            <Text variant="medium">View team leave requests and plan coverage</Text>
+          </Stack.Item>
+
+          {error && (
+            <MessageBar messageBarType={MessageBarType.error}>
+              {error}
+            </MessageBar>
+          )}
+
+          {/* Toolbar */}
+          <Stack horizontal tokens={{ childrenGap: 15 }} wrap>
+            <Dropdown
+              label="View"
+              options={viewOptions}
+              selectedKey={currentView}
+              onChange={this.onViewChange}
+              styles={{ root: { minWidth: 120 } }}
+            />
+
+            <Dropdown
+              label="Leave Type"
+              options={leaveTypeOptions}
+              selectedKey={filters.leaveTypeId || 'all'}
+              onChange={(e, option) => this.onFilterChange('leaveTypeId', option?.key === 'all' ? undefined : option?.key)}
+              styles={{ root: { minWidth: 150 } }}
+            />
+
+            <TextField
+              label="Department"
+              value={filters.department}
+              onChange={(e, value) => this.onFilterChange('department', value || '')}
+              styles={{ root: { minWidth: 120 } }}
+            />
+
+            <Toggle
+              label="Show only approved"
+              checked={filters.showOnlyApproved}
+              onChange={(e, checked) => this.onFilterChange('showOnlyApproved', !!checked)}
+            />
+
+            <Stack horizontal tokens={{ childrenGap: 10 }}>
+              <DefaultButton
+                text="Refresh"
+                iconProps={{ iconName: 'Refresh' }}
+                onClick={this.onRefresh}
+              />
+              <DefaultButton
+                text="Export"
+                iconProps={{ iconName: 'Download' }}
+                onClick={this.onExportCalendar}
+              />
+            </Stack>
+          </Stack>
+
+          {/* Calendar */}
+          <Stack.Item className={styles.calendarContainer}>
+            <FullCalendar
+              ref={this.calendarRef}
+              plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin]}
+              initialView={currentView}
+              headerToolbar={{
+                left: 'prev,next today',
+                center: 'title',
+                right: ''
+              }}
+              events={events}
+              eventClick={this.onEventClick}
+              height="auto"
+              eventDisplay="block"
+              dayMaxEvents={3}
+              moreLinkClick="popover"
+              eventTimeFormat={{
+                hour: 'numeric',
+                minute: '2-digit',
+                meridiem: 'short'
+              }}
+              slotLabelFormat={{
+                hour: 'numeric',
+                minute: '2-digit',
+                meridiem: 'short'
+              }}
+            />
+          </Stack.Item>
+        </Stack>
+
+        {/* Event Details Panel */}
+        <Panel
+          isOpen={isPanelOpen}
+          onDismiss={this.onClosePanel}
+          type={PanelType.medium}
+          headerText="Leave Request Details"
+          closeButtonAriaLabel="Close"
+        >
+          {selectedEvent && (
+            <Stack tokens={{ childrenGap: 15 }}>
+              <Stack.Item>
+                <Text variant="large" as="h3">
+                  {selectedEvent.extendedProps.leaveRequest.Requester.Title}
+                </Text>
+                <Text variant="medium">
+                  {selectedEvent.extendedProps.leaveRequest.LeaveType.Title}
+                </Text>
+              </Stack.Item>
+
+              <Stack tokens={{ childrenGap: 10 }}>
+                <Stack horizontal tokens={{ childrenGap: 20 }}>
+                  <Stack.Item>
+                    <Text variant="smallPlus" styles={{ root: { fontWeight: 600 } }}>
+                      Start Date:
+                    </Text>
+                    <Text variant="small">
+                      {selectedEvent.extendedProps.leaveRequest.StartDate.toLocaleDateString()}
+                    </Text>
+                  </Stack.Item>
+                  <Stack.Item>
+                    <Text variant="smallPlus" styles={{ root: { fontWeight: 600 } }}>
+                      End Date:
+                    </Text>
+                    <Text variant="small">
+                      {selectedEvent.extendedProps.leaveRequest.EndDate.toLocaleDateString()}
+                    </Text>
+                  </Stack.Item>
+                </Stack>
+
+                <Stack.Item>
+                  <Text variant="smallPlus" styles={{ root: { fontWeight: 600 } }}>
+                    Status:
+                  </Text>
+                  <Text variant="small">
+                    {selectedEvent.extendedProps.leaveRequest.ApprovalStatus}
+                  </Text>
+                </Stack.Item>
+
+                <Stack.Item>
+                  <Text variant="smallPlus" styles={{ root: { fontWeight: 600 } }}>
+                    Total Days:
+                  </Text>
+                  <Text variant="small">
+                    {selectedEvent.extendedProps.leaveRequest.TotalDays ||
+                     CommonUtils.calculateBusinessDays(
+                       selectedEvent.extendedProps.leaveRequest.StartDate,
+                       selectedEvent.extendedProps.leaveRequest.EndDate
+                     )}
+                  </Text>
+                </Stack.Item>
+
+                {selectedEvent.extendedProps.leaveRequest.IsPartialDay && (
+                  <Stack.Item>
+                    <Text variant="smallPlus" styles={{ root: { fontWeight: 600 } }}>
+                      Partial Day Hours:
+                    </Text>
+                    <Text variant="small">
+                      {selectedEvent.extendedProps.leaveRequest.PartialDayHours}
+                    </Text>
+                  </Stack.Item>
+                )}
+
+                {selectedEvent.extendedProps.leaveRequest.RequestComments && (
+                  <Stack.Item>
+                    <Text variant="smallPlus" styles={{ root: { fontWeight: 600 } }}>
+                      Comments:
+                    </Text>
+                    <Text variant="small">
+                      {selectedEvent.extendedProps.leaveRequest.RequestComments}
+                    </Text>
+                  </Stack.Item>
+                )}
+
+                <Stack.Item>
+                  <Text variant="smallPlus" styles={{ root: { fontWeight: 600 } }}>
+                    Submitted:
+                  </Text>
+                  <Text variant="small">
+                    {selectedEvent.extendedProps.leaveRequest.SubmissionDate.toLocaleDateString()}
+                  </Text>
+                </Stack.Item>
+
+                {selectedEvent.extendedProps.leaveRequest.Department && (
+                  <Stack.Item>
+                    <Text variant="smallPlus" styles={{ root: { fontWeight: 600 } }}>
+                      Department:
+                    </Text>
+                    <Text variant="small">
+                      {selectedEvent.extendedProps.leaveRequest.Department}
+                    </Text>
+                  </Stack.Item>
+                )}
+              </Stack>
+            </Stack>
+          )}
+        </Panel>
+      </section>
+    );
+  }
+}
