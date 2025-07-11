@@ -9,10 +9,19 @@
           "manifest": "./src/webparts/leaveRequestForm/LeaveRequestFormWebPart.manifest.json"
         }
       ]
+    },
+    "team-calendar-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/teamCalendar/TeamCalendarWebPart.js",
+          "manifest": "./src/webparts/teamCalendar/TeamCalendarWebPart.manifest.json"
+        }
+      ]
     }
   },
   "externals": {},
   "localizedResources": {
-    "LeaveRequestFormWebPartStrings": "lib/webparts/leaveRequestForm/loc/{locale}.js"
+    "LeaveRequestFormWebPartStrings": "lib/webparts/leaveRequestForm/loc/{locale}.js",
+    "TeamCalendarWebPartStrings": "lib/webparts/teamCalendar/loc/{locale}.js"
   }
 }

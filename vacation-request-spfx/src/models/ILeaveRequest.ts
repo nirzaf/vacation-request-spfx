@@ -64,6 +64,8 @@ export interface ILeaveRequestUpdate {
   AttachmentURL?: string;
   ApprovalStatus?: ApprovalStatus;
   ApprovalComments?: string;
+  ApprovalDate?: Date;
+  CalendarEventID?: string;
 }
 
 /**

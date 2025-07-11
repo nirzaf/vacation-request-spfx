@@ -1,34 +1,109 @@
 @import '~@fluentui/react/dist/sass/References.scss';
 
 .leaveRequestForm {
-  overflow: hidden;
-  padding: 1em;
   color: "[theme:bodyText, default: #323130]";
   color: var(--bodyText);
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+
   &.teams {
     font-family: $ms-font-family-fallbacks;
   }
-}
 
-.welcome {
-  text-align: center;
-}
+  .formSection {
+    background: "[theme:bodyBackground, default: #ffffff]";
+    background: var(--bodyBackground);
+    border: 1px solid "[theme:neutralLight, default: #edebe9]";
+    border: 1px solid var(--neutralLight);
+    border-radius: 4px;
+    padding: 24px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
 
-.welcomeImage {
-  width: 100%;
-  max-width: 420px;
-}
+  .sectionTitle {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: "[theme:themePrimary, default: #0078d4]";
+    color: var(--themePrimary);
+  }
 
-.links {
-  a {
-    text-decoration: none;
-    color: "[theme:link, default:#03787c]";
-    color: var(--link); // note: CSS Custom Properties support is limited to modern browsers only
+  .fieldGroup {
+    margin-bottom: 16px;
+  }
 
-    &:hover {
-      text-decoration: underline;
-      color: "[theme:linkHovered, default: #014446]";
-      color: var(--linkHovered); // note: CSS Custom Properties support is limited to modern browsers only
+  .inlineFields {
+    display: flex;
+    gap: 16px;
+
+    > * {
+      flex: 1;
     }
+  }
+
+  .helpText {
+    font-size: 12px;
+    color: "[theme:neutralSecondary, default: #605e5c]";
+    color: var(--neutralSecondary);
+    margin-top: 4px;
+    font-style: italic;
+  }
+
+  .summaryBox {
+    background: "[theme:neutralLighterAlt, default: #faf9f8]";
+    background: var(--neutralLighterAlt);
+    border: 1px solid "[theme:neutralLight, default: #edebe9]";
+    border: 1px solid var(--neutralLight);
+    border-radius: 4px;
+    padding: 16px;
+    margin: 16px 0;
+  }
+
+  .buttonGroup {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+    justify-content: flex-start;
+  }
+
+  .loadingContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+  }
+
+  .errorList {
+    margin: 0;
+    padding-left: 20px;
+
+    li {
+      margin-bottom: 4px;
+    }
+  }
+
+  .leaveTypeInfo {
+    background: "[theme:themeLight, default: #deecf9]";
+    background: var(--themeLight);
+    border-left: 4px solid "[theme:themePrimary, default: #0078d4]";
+    border-left: 4px solid var(--themePrimary);
+    padding: 12px 16px;
+    margin: 8px 0;
+    border-radius: 0 4px 4px 0;
+  }
+
+  .daysSummary {
+    font-weight: 600;
+    color: "[theme:themePrimary, default: #0078d4]";
+    color: var(--themePrimary);
+    font-size: 14px;
+  }
+
+  .requiredField::after {
+    content: ' *';
+    color: "[theme:errorText, default: #a80000]";
+    color: var(--errorText);
   }
 }

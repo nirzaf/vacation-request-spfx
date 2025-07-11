@@ -8,22 +8,22 @@ import {
 import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 import { IReadonlyTheme } from '@microsoft/sp-component-base';
 
-import * as strings from 'LeaveRequestFormWebPartStrings';
-import LeaveRequestForm from './components/LeaveRequestForm';
-import { ILeaveRequestFormProps } from './components/ILeaveRequestFormProps';
+import * as strings from 'TeamCalendarWebPartStrings';
+import TeamCalendar from './components/TeamCalendar';
+import { ITeamCalendarProps } from './components/ITeamCalendarProps';
 
-export interface ILeaveRequestFormWebPartProps {
+export interface ITeamCalendarWebPartProps {
   description: string;
 }
 
-export default class LeaveRequestFormWebPart extends BaseClientSideWebPart<ILeaveRequestFormWebPartProps> {
+export default class TeamCalendarWebPart extends BaseClientSideWebPart<ITeamCalendarWebPartProps> {
 
   private _isDarkTheme: boolean = false;
   private _environmentMessage: string = '';
 
   public render(): void {
-    const element: React.ReactElement<ILeaveRequestFormProps> = React.createElement(
-      LeaveRequestForm,
+    const element: React.ReactElement<ITeamCalendarProps> = React.createElement(
+      TeamCalendar,
       {
         description: this.properties.description,
         isDarkTheme: this._isDarkTheme,
