@@ -17,11 +17,20 @@
           "manifest": "./src/webparts/teamCalendar/TeamCalendarWebPart.manifest.json"
         }
       ]
+    },
+    "leave-history-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/leaveHistory/LeaveHistoryWebPart.js",
+          "manifest": "./src/webparts/leaveHistory/LeaveHistoryWebPart.manifest.json"
+        }
+      ]
     }
   },
   "externals": {},
   "localizedResources": {
     "LeaveRequestFormWebPartStrings": "lib/webparts/leaveRequestForm/loc/{locale}.js",
-    "TeamCalendarWebPartStrings": "lib/webparts/teamCalendar/loc/{locale}.js"
+    "TeamCalendarWebPartStrings": "lib/webparts/teamCalendar/loc/{locale}.js",
+    "LeaveHistoryWebPartStrings": "lib/webparts/leaveHistory/loc/{locale}.js"
   }
 }

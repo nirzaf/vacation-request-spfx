@@ -1,0 +1,246 @@
+@import '~@fluentui/react/dist/sass/References.scss';
+
+.leaveHistory {
+  color: "[theme:bodyText, default: #323130]";
+  color: var(--bodyText);
+  padding: 20px;
+  max-width: 100%;
+
+  &.teams {
+    font-family: $ms-font-family-fallbacks;
+  }
+
+  .requestsList {
+    background: "[theme:bodyBackground, default: #ffffff]";
+    background: var(--bodyBackground);
+    border: 1px solid "[theme:neutralLight, default: #edebe9]";
+    border: 1px solid var(--neutralLight);
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+    :global {
+      .ms-DetailsHeader {
+        background: "[theme:neutralLighter, default: #f3f2f1]";
+        background: var(--neutralLighter);
+        border-bottom: 1px solid "[theme:neutralLight, default: #edebe9]";
+        border-bottom: 1px solid var(--neutralLight);
+      }
+
+      .ms-DetailsHeader-cell {
+        font-weight: 600;
+        color: "[theme:neutralPrimary, default: #323130]";
+        color: var(--neutralPrimary);
+      }
+
+      .ms-DetailsRow {
+        border-bottom: 1px solid "[theme:neutralLighter, default: #f3f2f1]";
+        border-bottom: 1px solid var(--neutralLighter);
+
+        &:hover {
+          background: "[theme:neutralLighterAlt, default: #faf9f8]";
+          background: var(--neutralLighterAlt);
+        }
+      }
+
+      .ms-DetailsRow-cell {
+        padding: 12px 8px;
+      }
+    }
+  }
+
+  .statusBadge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+
+    &.pending {
+      background: "[theme:warningLight, default: #fff4ce]";
+      background: var(--warningLight);
+      color: "[theme:warningDark, default: #797673]";
+      color: var(--warningDark);
+    }
+
+    &.approved {
+      background: "[theme:successLight, default: #dff6dd]";
+      background: var(--successLight);
+      color: "[theme:successDark, default: #107c10]";
+      color: var(--successDark);
+    }
+
+    &.rejected {
+      background: "[theme:errorLight, default: #fde7e9]";
+      background: var(--errorLight);
+      color: "[theme:errorDark, default: #a80000]";
+      color: var(--errorDark);
+    }
+
+    &.cancelled {
+      background: "[theme:neutralLight, default: #edebe9]";
+      background: var(--neutralLight);
+      color: "[theme:neutralSecondary, default: #605e5c]";
+      color: var(--neutralSecondary);
+    }
+  }
+
+  .balanceCard {
+    background: "[theme:bodyBackground, default: #ffffff]";
+    background: var(--bodyBackground);
+    border: 1px solid "[theme:neutralLight, default: #edebe9]";
+    border: 1px solid var(--neutralLight);
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.2s ease;
+
+    &:hover {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .balanceHeader {
+      font-size: 16px;
+      font-weight: 600;
+      color: "[theme:themePrimary, default: #0078d4]";
+      color: var(--themePrimary);
+      margin-bottom: 12px;
+    }
+
+    .balanceRow {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+
+      .label {
+        color: "[theme:neutralSecondary, default: #605e5c]";
+        color: var(--neutralSecondary);
+      }
+
+      .value {
+        font-weight: 600;
+        color: "[theme:neutralPrimary, default: #323130]";
+        color: var(--neutralPrimary);
+      }
+
+      &.remaining {
+        .value {
+          &.low {
+            color: "[theme:errorText, default: #a80000]";
+            color: var(--errorText);
+          }
+
+          &.good {
+            color: "[theme:successText, default: #107c10]";
+            color: var(--successText);
+          }
+        }
+      }
+    }
+
+    .expirationWarning {
+      background: "[theme:warningLight, default: #fff4ce]";
+      background: var(--warningLight);
+      color: "[theme:warningDark, default: #797673]";
+      color: var(--warningDark);
+      padding: 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      margin-top: 8px;
+    }
+  }
+
+  .summaryCards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+
+    .summaryCard {
+      background: "[theme:bodyBackground, default: #ffffff]";
+      background: var(--bodyBackground);
+      border: 1px solid "[theme:neutralLight, default: #edebe9]";
+      border: 1px solid var(--neutralLight);
+      border-radius: 8px;
+      padding: 16px;
+      text-align: center;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+      .summaryNumber {
+        font-size: 24px;
+        font-weight: 700;
+        color: "[theme:themePrimary, default: #0078d4]";
+        color: var(--themePrimary);
+        margin-bottom: 4px;
+      }
+
+      .summaryLabel {
+        font-size: 14px;
+        color: "[theme:neutralSecondary, default: #605e5c]";
+        color: var(--neutralSecondary);
+      }
+    }
+  }
+
+  .actionButtons {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .emptyState {
+    text-align: center;
+    padding: 40px 20px;
+    color: "[theme:neutralSecondary, default: #605e5c]";
+    color: var(--neutralSecondary);
+
+    .emptyIcon {
+      font-size: 48px;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+
+    .emptyTitle {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: "[theme:neutralPrimary, default: #323130]";
+      color: var(--neutralPrimary);
+    }
+
+    .emptyMessage {
+      font-size: 14px;
+    }
+  }
+
+  .loadingContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+  }
+
+  .filterSection {
+    background: "[theme:neutralLighterAlt, default: #faf9f8]";
+    background: var(--neutralLighterAlt);
+    border: 1px solid "[theme:neutralLight, default: #edebe9]";
+    border: 1px solid var(--neutralLight);
+    border-radius: 4px;
+    padding: 16px;
+    margin-bottom: 16px;
+
+    .filterTitle {
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: "[theme:neutralPrimary, default: #323130]";
+      color: var(--neutralPrimary);
+    }
+
+    .filterControls {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      align-items: flex-end;
+    }
+  }
+}
