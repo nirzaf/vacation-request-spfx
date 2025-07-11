@@ -217,6 +217,16 @@ export default class LeaveHistory extends React.Component<ILeaveHistoryProps, IL
     return leaveType?.ColorCode || '#0078d4';
   }
 
+  private getStatusClass(status: string): string {
+    switch (status.toLowerCase()) {
+      case 'pending': return styles.pending;
+      case 'approved': return styles.approved;
+      case 'rejected': return styles.rejected;
+      case 'cancelled': return styles.cancelled;
+      default: return '';
+    }
+  }
+
   private onViewRequest = (request: ILeaveRequest): void => {
     this.setState({
       selectedRequest: request,
@@ -368,55 +378,52 @@ export default class LeaveHistory extends React.Component<ILeaveHistoryProps, IL
 
   private renderBalanceCards(): React.ReactElement {
     const { leaveBalances } = this.state;
-    const cardTokens: ICardTokens = { childrenMargin: 12 };
 
     return (
       <Stack tokens={{ childrenGap: 16 }}>
         <Text variant="xLarge" as="h2">Leave Balances</Text>
         <Stack horizontal wrap tokens={{ childrenGap: 16 }}>
           {leaveBalances.map(balance => (
-            <Card key={balance.Id} tokens={cardTokens} styles={{ root: { minWidth: 250, maxWidth: 300 } }}>
-              <Card.Section>
-                <Stack tokens={{ childrenGap: 8 }}>
-                  <Text variant="large" styles={{ root: { fontWeight: 600 } }}>
-                    {balance.LeaveType.Title}
+            <div key={balance.Id} className={styles.balanceCard}>
+              <Stack tokens={{ childrenGap: 8 }}>
+                <Text variant="large" styles={{ root: { fontWeight: 600 } }}>
+                  {balance.LeaveType.Title}
+                </Text>
+                <Stack horizontal horizontalAlign="space-between">
+                  <Text variant="medium">Total Allowance:</Text>
+                  <Text variant="medium" styles={{ root: { fontWeight: 600 } }}>
+                    {balance.TotalAllowance} days
                   </Text>
-                  <Stack horizontal horizontalAlign="space-between">
-                    <Text variant="medium">Total Allowance:</Text>
-                    <Text variant="medium" styles={{ root: { fontWeight: 600 } }}>
-                      {balance.TotalAllowance} days
-                    </Text>
-                  </Stack>
-                  <Stack horizontal horizontalAlign="space-between">
-                    <Text variant="medium">Used:</Text>
-                    <Text variant="medium" styles={{ root: { fontWeight: 600 } }}>
-                      {balance.UsedDays} days
-                    </Text>
-                  </Stack>
-                  <Stack horizontal horizontalAlign="space-between">
-                    <Text variant="medium">Remaining:</Text>
-                    <Text variant="medium" styles={{
-                      root: {
-                        fontWeight: 600,
-                        color: balance.RemainingDays < 5 ? '#d13438' : '#107c10'
-                      }
-                    }}>
-                      {balance.RemainingDays} days
-                    </Text>
-                  </Stack>
-                  {balance.CarryOverDays > 0 && (
-                    <Stack horizontal horizontalAlign="space-between">
-                      <Text variant="small">Carry Over:</Text>
-                      <Text variant="small">{balance.CarryOverDays} days</Text>
-                    </Stack>
-                  )}
-                  <Stack horizontal horizontalAlign="space-between">
-                    <Text variant="small">Expires:</Text>
-                    <Text variant="small">{balance.ExpirationDate.toLocaleDateString()}</Text>
-                  </Stack>
                 </Stack>
-              </Card.Section>
-            </Card>
+                <Stack horizontal horizontalAlign="space-between">
+                  <Text variant="medium">Used:</Text>
+                  <Text variant="medium" styles={{ root: { fontWeight: 600 } }}>
+                    {balance.UsedDays} days
+                  </Text>
+                </Stack>
+                <Stack horizontal horizontalAlign="space-between">
+                  <Text variant="medium">Remaining:</Text>
+                  <Text variant="medium" styles={{
+                    root: {
+                      fontWeight: 600,
+                      color: balance.RemainingDays < 5 ? '#d13438' : '#107c10'
+                    }
+                  }}>
+                    {balance.RemainingDays} days
+                  </Text>
+                </Stack>
+                {balance.CarryOverDays > 0 && (
+                  <Stack horizontal horizontalAlign="space-between">
+                    <Text variant="small">Carry Over:</Text>
+                    <Text variant="small">{balance.CarryOverDays} days</Text>
+                  </Stack>
+                )}
+                <Stack horizontal horizontalAlign="space-between">
+                  <Text variant="small">Expires:</Text>
+                  <Text variant="small">{balance.ExpirationDate.toLocaleDateString()}</Text>
+                </Stack>
+              </Stack>
+            </div>
           ))}
         </Stack>
       </Stack>
@@ -523,7 +530,7 @@ export default class LeaveHistory extends React.Component<ILeaveHistoryProps, IL
 
                 <Stack.Item>
                   <Label>Status:</Label>
-                  <span className={`${styles.statusBadge} ${styles[selectedRequest.ApprovalStatus.toLowerCase()]}`}>
+                  <span className={`${styles.statusBadge} ${this.getStatusClass(selectedRequest.ApprovalStatus)}`}>
                     {selectedRequest.ApprovalStatus}
                   </span>
                 </Stack.Item>
