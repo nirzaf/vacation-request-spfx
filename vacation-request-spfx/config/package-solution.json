@@ -1,40 +1,69 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
   "solution": {
-    "name": "vacation-request-spfx-client-side-solution",
+    "name": "team-leave-vacation-request-solution",
     "id": "016cb81e-08a0-4208-889b-700f63fbd50d",
     "version": "1.0.0.0",
     "includeClientSideAssets": true,
-    "skipFeatureDeployment": true,
+    "skipFeatureDeployment": false,
     "isDomainIsolated": false,
     "developer": {
-      "name": "",
-      "websiteUrl": "",
-      "privacyUrl": "",
-      "termsOfUseUrl": "",
-      "mpnId": "Undefined-1.21.1"
+      "name": "M.F.M Fazrin",
+      "websiteUrl": "https://github.com/nirzaf/vacation-request-spfx",
+      "privacyUrl": "https://github.com/nirzaf/vacation-request-spfx/blob/main/PRIVACY.md",
+      "termsOfUseUrl": "https://github.com/nirzaf/vacation-request-spfx/blob/main/TERMS.md",
+      "mpnId": ""
     },
     "metadata": {
       "shortDescription": {
-        "default": "vacation-request-spfx description"
+        "default": "Comprehensive team leave and vacation request management solution for SharePoint"
       },
       "longDescription": {
-        "default": "vacation-request-spfx description"
+        "default": "A complete SharePoint Framework solution for managing team leave requests, vacation planning, and HR administration. Features include leave request submission, team calendar views, personal leave history tracking, and comprehensive administration dashboard with analytics."
       },
       "screenshotPaths": [],
       "videoUrl": "",
-      "categories": []
+      "categories": [
+        "Productivity"
+      ]
     },
     "features": [
       {
-        "title": "vacation-request-spfx Feature",
-        "description": "The feature that activates elements of the vacation-request-spfx solution.",
+        "title": "Team Leave & Vacation Request Management",
+        "description": "Comprehensive leave management system with request submission, approval workflows, calendar integration, and analytics dashboard.",
         "id": "8a8a1648-cb63-4a11-89d5-4688e9800541",
-        "version": "1.0.0.0"
+        "version": "1.0.0.0",
+        "assets": {
+          "elementManifests": [
+            "elements.xml"
+          ]
+        }
+      }
+    ],
+    "webApiPermissionRequests": [
+      {
+        "resource": "Microsoft Graph",
+        "scope": "User.Read"
+      },
+      {
+        "resource": "Microsoft Graph",
+        "scope": "User.ReadBasic.All"
+      },
+      {
+        "resource": "Microsoft Graph",
+        "scope": "Calendars.ReadWrite"
+      },
+      {
+        "resource": "Microsoft Graph",
+        "scope": "Mail.Send"
+      },
+      {
+        "resource": "Microsoft Graph",
+        "scope": "Directory.Read.All"
       }
     ]
   },
   "paths": {
-    "zippedPackage": "solution/vacation-request-spfx.sppkg"
+    "zippedPackage": "solution/team-leave-vacation-request-solution.sppkg"
   }
 }

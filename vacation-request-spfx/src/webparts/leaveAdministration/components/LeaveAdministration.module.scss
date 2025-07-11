@@ -1,0 +1,314 @@
+@import '~@fluentui/react/dist/sass/References.scss';
+
+.leaveAdministration {
+  color: "[theme:bodyText, default: #323130]";
+  color: var(--bodyText);
+  padding: 20px;
+  max-width: 100%;
+
+  &.teams {
+    font-family: $ms-font-family-fallbacks;
+  }
+
+  .requestsList {
+    background: "[theme:bodyBackground, default: #ffffff]";
+    background: var(--bodyBackground);
+    border: 1px solid "[theme:neutralLight, default: #edebe9]";
+    border: 1px solid var(--neutralLight);
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+    :global {
+      .ms-DetailsHeader {
+        background: "[theme:neutralLighter, default: #f3f2f1]";
+        background: var(--neutralLighter);
+        border-bottom: 1px solid "[theme:neutralLight, default: #edebe9]";
+        border-bottom: 1px solid var(--neutralLight);
+      }
+
+      .ms-DetailsHeader-cell {
+        font-weight: 600;
+        color: "[theme:neutralPrimary, default: #323130]";
+        color: var(--neutralPrimary);
+      }
+
+      .ms-DetailsRow {
+        border-bottom: 1px solid "[theme:neutralLighter, default: #f3f2f1]";
+        border-bottom: 1px solid var(--neutralLighter);
+
+        &:hover {
+          background: "[theme:neutralLighterAlt, default: #faf9f8]";
+          background: var(--neutralLighterAlt);
+        }
+
+        &.is-selected {
+          background: "[theme:themeLight, default: #deecf9]";
+          background: var(--themeLight);
+        }
+      }
+
+      .ms-DetailsRow-cell {
+        padding: 12px 8px;
+      }
+
+      .ms-Check {
+        .ms-Check-circle {
+          border-color: "[theme:themePrimary, default: #0078d4]";
+          border-color: var(--themePrimary);
+        }
+
+        &.is-checked .ms-Check-circle {
+          background: "[theme:themePrimary, default: #0078d4]";
+          background: var(--themePrimary);
+        }
+      }
+    }
+  }
+
+  .statusBadge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+
+    &.pending {
+      background: "[theme:warningLight, default: #fff4ce]";
+      background: var(--warningLight);
+      color: "[theme:warningDark, default: #797673]";
+      color: var(--warningDark);
+    }
+
+    &.approved {
+      background: "[theme:successLight, default: #dff6dd]";
+      background: var(--successLight);
+      color: "[theme:successDark, default: #107c10]";
+      color: var(--successDark);
+    }
+
+    &.rejected {
+      background: "[theme:errorLight, default: #fde7e9]";
+      background: var(--errorLight);
+      color: "[theme:errorDark, default: #a80000]";
+      color: var(--errorDark);
+    }
+
+    &.cancelled {
+      background: "[theme:neutralLight, default: #edebe9]";
+      background: var(--neutralLight);
+      color: "[theme:neutralSecondary, default: #605e5c]";
+      color: var(--neutralSecondary);
+    }
+  }
+
+  .filtersSection {
+    background: "[theme:neutralLighterAlt, default: #faf9f8]";
+    background: var(--neutralLighterAlt);
+    border: 1px solid "[theme:neutralLight, default: #edebe9]";
+    border: 1px solid var(--neutralLight);
+    border-radius: 4px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+
+  .summaryCards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+
+    .summaryCard {
+      background: "[theme:bodyBackground, default: #ffffff]";
+      background: var(--bodyBackground);
+      border: 1px solid "[theme:neutralLight, default: #edebe9]";
+      border: 1px solid var(--neutralLight);
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      }
+
+      .summaryNumber {
+        font-size: 32px;
+        font-weight: 700;
+        color: "[theme:themePrimary, default: #0078d4]";
+        color: var(--themePrimary);
+        margin-bottom: 8px;
+        line-height: 1;
+      }
+
+      .summaryLabel {
+        font-size: 14px;
+        color: "[theme:neutralSecondary, default: #605e5c]";
+        color: var(--neutralSecondary);
+        font-weight: 500;
+      }
+    }
+  }
+
+  .analyticsSection {
+    .chartContainer {
+      background: "[theme:bodyBackground, default: #ffffff]";
+      background: var(--bodyBackground);
+      border: 1px solid "[theme:neutralLight, default: #edebe9]";
+      border: 1px solid var(--neutralLight);
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .statsList {
+      background: "[theme:bodyBackground, default: #ffffff]";
+      background: var(--bodyBackground);
+      border: 1px solid "[theme:neutralLight, default: #edebe9]";
+      border: 1px solid var(--neutralLight);
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+      .statsItem {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 0;
+        border-bottom: 1px solid "[theme:neutralLighter, default: #f3f2f1]";
+        border-bottom: 1px solid var(--neutralLighter);
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        .statsLabel {
+          color: "[theme:neutralPrimary, default: #323130]";
+          color: var(--neutralPrimary);
+        }
+
+        .statsValue {
+          font-weight: 600;
+          color: "[theme:themePrimary, default: #0078d4]";
+          color: var(--themePrimary);
+        }
+      }
+    }
+  }
+
+  .actionButtons {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .bulkActions {
+    background: "[theme:themeLight, default: #deecf9]";
+    background: var(--themeLight);
+    border: 1px solid "[theme:themePrimary, default: #0078d4]";
+    border: 1px solid var(--themePrimary);
+    border-radius: 4px;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+
+    .bulkMessage {
+      color: "[theme:themeDark, default: #106ebe]";
+      color: var(--themeDark);
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+  }
+
+  .emptyState {
+    text-align: center;
+    padding: 60px 20px;
+    color: "[theme:neutralSecondary, default: #605e5c]";
+    color: var(--neutralSecondary);
+
+    .emptyIcon {
+      font-size: 64px;
+      margin-bottom: 20px;
+      opacity: 0.5;
+    }
+
+    .emptyTitle {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: "[theme:neutralPrimary, default: #323130]";
+      color: var(--neutralPrimary);
+    }
+
+    .emptyMessage {
+      font-size: 16px;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+  }
+
+  .loadingContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+  }
+
+  .progressSection {
+    margin: 16px 0;
+
+    .progressLabel {
+      font-size: 14px;
+      color: "[theme:neutralPrimary, default: #323130]";
+      color: var(--neutralPrimary);
+      margin-bottom: 8px;
+    }
+  }
+
+  .adminHeader {
+    background: "[theme:themePrimary, default: #0078d4]";
+    background: var(--themePrimary);
+    color: white;
+    padding: 16px 20px;
+    border-radius: 8px 8px 0 0;
+    margin: -20px -20px 20px -20px;
+
+    .adminTitle {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .adminSubtitle {
+      font-size: 14px;
+      opacity: 0.9;
+    }
+  }
+
+  .quickStats {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+
+    .quickStat {
+      .statNumber {
+        font-size: 28px;
+        font-weight: 700;
+        color: "[theme:themePrimary, default: #0078d4]";
+        color: var(--themePrimary);
+        line-height: 1;
+      }
+
+      .statLabel {
+        font-size: 12px;
+        color: "[theme:neutralSecondary, default: #605e5c]";
+        color: var(--neutralSecondary);
+        text-transform: uppercase;
+        font-weight: 600;
+        margin-top: 4px;
+      }
+    }
+  }
+}

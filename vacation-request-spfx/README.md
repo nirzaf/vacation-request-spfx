@@ -1,10 +1,8 @@
-# vacation-request-spfx
+# Team Leave & Vacation Request SPFx Solution
 
 ## Summary
 
-Short summary on functionality and used technologies.
-
-[picture of the solution in action, if possible]
+A comprehensive SharePoint Framework (SPFx) solution for managing team leave requests, vacation planning, and HR administration. This solution provides a complete workflow for leave management with modern React-based web parts, Microsoft Graph integration, and advanced analytics.
 
 ## Used SharePoint Framework Version
 
@@ -14,25 +12,30 @@ Short summary on functionality and used technologies.
 
 - [SharePoint Framework](https://aka.ms/spfx)
 - [Microsoft 365 tenant](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/set-up-your-developer-tenant)
+- [Microsoft Graph API](https://docs.microsoft.com/en-us/graph/)
+- [Office UI Fabric React](https://developer.microsoft.com/en-us/fluentui)
 
 > Get your own free development tenant by subscribing to [Microsoft 365 developer program](http://aka.ms/o365devprogram)
 
 ## Prerequisites
 
-> Any special pre-requisites?
+- SharePoint Online environment
+- Node.js (v16 or later)
+- SharePoint Framework development environment
+- PnP PowerShell module
+- Appropriate permissions for SharePoint and Microsoft Graph
 
 ## Solution
 
 | Solution    | Author(s)                                               |
 | ----------- | ------------------------------------------------------- |
-| folder name | Author details (name, company, twitter alias with link) |
+| vacation-request-spfx | M.F.M Fazrin ([@nirzaf](https://github.com/nirzaf)) |
 
 ## Version history
 
 | Version | Date             | Comments        |
 | ------- | ---------------- | --------------- |
-| 1.1     | March 10, 2021   | Update comment  |
-| 1.0     | January 29, 2021 | Initial release |
+| 1.0     | December 2024   | Initial release with complete leave management system |
 
 ## Disclaimer
 
@@ -40,34 +43,123 @@ Short summary on functionality and used technologies.
 
 ---
 
+## 🌟 Features
+
+### 📝 Leave Request Form
+- **Intuitive Request Submission**: Easy-to-use form with validation and real-time feedback
+- **Dynamic Leave Type Selection**: Configurable leave types with specific rules and policies
+- **Manager Auto-Detection**: Automatic manager assignment using Microsoft Graph
+- **Partial Day Support**: Handle partial day leave requests with hour tracking
+- **Document Attachments**: Support for required documentation
+- **Real-time Validation**: Business rule validation and conflict detection
+
+### 📅 Team Calendar
+- **FullCalendar Integration**: Rich calendar interface with multiple view modes
+- **Team Visibility**: View all team leave requests in calendar format
+- **Filtering & Search**: Advanced filtering by leave type, department, and status
+- **Conflict Detection**: Visual identification of overlapping requests
+- **Export Capabilities**: Export calendar data to CSV
+
+### 📊 Leave History & Tracking
+- **Personal Dashboard**: Track individual leave request history and status
+- **Leave Balance Monitoring**: Real-time balance tracking with expiration warnings
+- **Request Modification**: Edit pending requests with approval workflow
+- **Status Tracking**: Complete audit trail of request lifecycle
+
+### 🏢 Administration Dashboard
+- **Bulk Approval Workflows**: Efficient processing of multiple requests
+- **Advanced Analytics**: Comprehensive reporting and trend analysis
+- **Team Management**: Department-wise leave tracking and planning
+- **Policy Management**: Configure leave types, rules, and allowances
+- **Notification System**: Automated email notifications via Microsoft Graph
+
 ## Minimal Path to Awesome
 
-- Clone this repository
-- Ensure that you are at the solution folder
-- in the command-line run:
-  - **npm install**
-  - **gulp serve**
+1. **Clone this repository**
+   ```bash
+   git clone https://github.com/nirzaf/vacation-request-spfx.git
+   cd vacation-request-spfx
+   ```
 
-> Include any additional steps as needed.
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-## Features
+3. **Build the solution**
+   ```bash
+   gulp build
+   gulp bundle --ship
+   gulp package-solution --ship
+   ```
 
-Description of the extension that expands upon high-level summary above.
+4. **Deploy to SharePoint**
+   ```powershell
+   # Run the deployment script
+   .\scripts\Deploy-Solution.ps1 -SiteUrl "https://yourtenant.sharepoint.com/sites/yoursite" -AppCatalogUrl "https://yourtenant.sharepoint.com/sites/appcatalog" -IncludeTestData
+   ```
 
-This extension illustrates the following concepts:
+5. **Setup SharePoint Lists**
+   ```powershell
+   # Create required lists and sample data
+   .\scripts\Setup-SharePointLists.ps1 -SiteUrl "https://yourtenant.sharepoint.com/sites/yoursite" -IncludeTestData
+   ```
 
-- topic 1
-- topic 2
-- topic 3
+## Web Parts Included
 
-> Notice that better pictures and documentation will increase the sample usage and the value you are providing for others. Thanks for your submissions advance.
+| Web Part | Description | Target Users |
+|----------|-------------|--------------|
+| **LeaveRequestForm** | Submit and manage leave requests | All employees |
+| **TeamCalendar** | View team leave requests in calendar format | All employees, Managers |
+| **LeaveHistory** | Personal leave tracking and balance management | All employees |
+| **LeaveAdministration** | HR and manager dashboard with analytics | HR, Managers |
 
-> Share your web part with others through Microsoft 365 Patterns and Practices program to get visibility and exposure. More details on the community, open-source projects and other activities from http://aka.ms/m365pnp.
+## SharePoint Lists
+
+| List | Purpose | Key Fields |
+|------|---------|------------|
+| **LeaveRequests** | Central repository for all leave requests | Requester, LeaveType, StartDate, EndDate, ApprovalStatus |
+| **LeaveTypes** | Configurable leave type definitions | Title, RequiresApproval, MaxDaysPerRequest, ColorCode |
+| **LeaveBalances** | Employee leave balance tracking | Employee, LeaveType, TotalAllowance, UsedDays, RemainingDays |
+
+## Configuration
+
+### API Permissions
+Approve the following permissions in SharePoint Admin Center:
+- Microsoft Graph: User.Read
+- Microsoft Graph: User.ReadBasic.All
+- Microsoft Graph: Calendars.ReadWrite
+- Microsoft Graph: Mail.Send
+- Microsoft Graph: Directory.Read.All
+
+### Setup Steps
+1. Deploy the solution package to your App Catalog
+2. Install the solution on your target site
+3. Approve API permissions in SharePoint Admin Center
+4. Run the SharePoint list setup script
+5. Configure leave types and employee balances
+6. Add web parts to your SharePoint pages
+
+## Architecture
+
+### Services Layer
+- **SharePointService** - SharePoint list operations and data management
+- **GraphService** - Microsoft Graph API integration for calendar and notifications
+- **NotificationService** - Email notification management
+- **ValidationService** - Business rule validation and conflict detection
+
+### Models
+- **ILeaveRequest** - Leave request data structure
+- **ILeaveType** - Leave type configuration
+- **ILeaveBalance** - Employee balance tracking
+- **Common utilities** - Shared functionality and validation
 
 ## References
 
 - [Getting started with SharePoint Framework](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/set-up-your-developer-tenant)
 - [Building for Microsoft teams](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/build-for-teams-overview)
 - [Use Microsoft Graph in your solution](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/web-parts/get-started/using-microsoft-graph-apis)
-- [Publish SharePoint Framework applications to the Marketplace](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/publish-to-marketplace-overview)
-- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp) - Guidance, tooling, samples and open-source controls for your Microsoft 365 development
+- [Office UI Fabric React](https://developer.microsoft.com/en-us/fluentui)
+- [FullCalendar Documentation](https://fullcalendar.io/docs)
+- [PnP PowerShell](https://pnp.github.io/powershell/)
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

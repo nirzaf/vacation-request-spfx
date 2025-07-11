@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+  
+  <!-- Custom Actions for Site Collection -->
+  <CustomAction
+    Id="TeamLeaveVacationRequestSolution.CustomAction"
+    Location="ClientSideExtension.ApplicationCustomizer"
+    ClientSideComponentId="016cb81e-08a0-4208-889b-700f63fbd50d"
+    ClientSideComponentProperties="{&quot;testMessage&quot;:&quot;Team Leave & Vacation Request Solution Activated&quot;}"
+    Title="Team Leave & Vacation Request Solution">
+  </CustomAction>
+
+  <!-- Site Columns for Leave Management -->
+  <Field 
+    ID="{12345678-1234-1234-1234-123456789012}"
+    Name="LeaveRequestStatus"
+    DisplayName="Leave Request Status"
+    Type="Choice"
+    Required="FALSE"
+    Group="Team Leave Management">
+    <CHOICES>
+      <CHOICE>Pending</CHOICE>
+      <CHOICE>Approved</CHOICE>
+      <CHOICE>Rejected</CHOICE>
+      <CHOICE>Cancelled</CHOICE>
+    </CHOICES>
+    <Default>Pending</Default>
+  </Field>
+
+  <Field 
+    ID="{12345678-1234-1234-1234-123456789013}"
+    Name="LeaveTypeField"
+    DisplayName="Leave Type"
+    Type="Choice"
+    Required="FALSE"
+    Group="Team Leave Management">
+    <CHOICES>
+      <CHOICE>Annual Leave</CHOICE>
+      <CHOICE>Sick Leave</CHOICE>
+      <CHOICE>Personal Leave</CHOICE>
+      <CHOICE>Maternity/Paternity Leave</CHOICE>
+      <CHOICE>Emergency Leave</CHOICE>
+    </CHOICES>
+  </Field>
+
+  <Field 
+    ID="{12345678-1234-1234-1234-123456789014}"
+    Name="PartialDayHours"
+    DisplayName="Partial Day Hours"
+    Type="Number"
+    Required="FALSE"
+    Group="Team Leave Management"
+    Min="0.5"
+    Max="8"
+    Decimals="1">
+  </Field>
+
+  <!-- Content Types -->
+  <ContentType 
+    ID="0x0100123456789ABCDEF0123456789ABCDEF01"
+    Name="Leave Request"
+    Group="Team Leave Management"
+    Description="Content type for leave requests"
+    Inherits="TRUE"
+    Version="0">
+    <FieldRefs>
+      <FieldRef ID="{12345678-1234-1234-1234-123456789012}" Name="LeaveRequestStatus" />
+      <FieldRef ID="{12345678-1234-1234-1234-123456789013}" Name="LeaveTypeField" />
+      <FieldRef ID="{12345678-1234-1234-1234-123456789014}" Name="PartialDayHours" />
+    </FieldRefs>
+  </ContentType>
+
+  <!-- List Templates -->
+  <ListTemplate
+    Name="LeaveRequestsList"
+    Type="10001"
+    BaseType="0"
+    OnQuickLaunch="TRUE"
+    SecurityBits="11"
+    Sequence="410"
+    DisplayName="Leave Requests"
+    Description="List template for managing leave requests"
+    Image="/_layouts/15/images/itgen.png"/>
+
+  <!-- List Instances -->
+  <ListInstance 
+    Title="Leave Requests"
+    OnQuickLaunch="TRUE"
+    TemplateType="100"
+    FeatureId="00bfea71-de22-43b2-a848-c05709900100"
+    Url="Lists/LeaveRequests"
+    Description="Central repository for all leave requests">
+  </ListInstance>
+
+  <ListInstance 
+    Title="Leave Types"
+    OnQuickLaunch="TRUE"
+    TemplateType="100"
+    FeatureId="00bfea71-de22-43b2-a848-c05709900100"
+    Url="Lists/LeaveTypes"
+    Description="Configuration list for available leave types">
+  </ListInstance>
+
+  <ListInstance 
+    Title="Leave Balances"
+    OnQuickLaunch="TRUE"
+    TemplateType="100"
+    FeatureId="00bfea71-de22-43b2-a848-c05709900100"
+    Url="Lists/LeaveBalances"
+    Description="Employee leave balance tracking">
+  </ListInstance>
+
+  <!-- Web Parts -->
+  <Module Name="WebParts" Url="" Path="">
+    <File Path="LeaveRequestForm.webpart" Url="LeaveRequestForm.webpart" Type="GhostableInLibrary">
+      <Property Name="Group" Value="Team Leave Management" />
+      <Property Name="Title" Value="Leave Request Form" />
+      <Property Name="Description" Value="Submit and manage leave requests" />
+    </File>
+    
+    <File Path="TeamCalendar.webpart" Url="TeamCalendar.webpart" Type="GhostableInLibrary">
+      <Property Name="Group" Value="Team Leave Management" />
+      <Property Name="Title" Value="Team Leave Calendar" />
+      <Property Name="Description" Value="View team leave requests in calendar format" />
+    </File>
+    
+    <File Path="LeaveHistory.webpart" Url="LeaveHistory.webpart" Type="GhostableInLibrary">
+      <Property Name="Group" Value="Team Leave Management" />
+      <Property Name="Title" Value="My Leave History" />
+      <Property Name="Description" Value="Track personal leave request history and balances" />
+    </File>
+    
+    <File Path="LeaveAdministration.webpart" Url="LeaveAdministration.webpart" Type="GhostableInLibrary">
+      <Property Name="Group" Value="Team Leave Management" />
+      <Property Name="Title" Value="Leave Administration" />
+      <Property Name="Description" Value="HR and manager dashboard for leave management" />
+    </File>
+  </Module>
+
+  <!-- Navigation -->
+  <CustomAction
+    Id="TeamLeaveManagementNavigation"
+    GroupId="SiteActions"
+    Location="Microsoft.SharePoint.StandardMenu"
+    Sequence="1000"
+    Title="Leave Management"
+    Description="Access leave management tools">
+    <UrlAction Url="~site/SitePages/LeaveManagement.aspx"/>
+  </CustomAction>
+
+  <!-- Site Pages -->
+  <Module Name="SitePages" Url="SitePages" Path="SitePages">
+    <File Path="LeaveManagement.aspx" Url="LeaveManagement.aspx" Type="GhostableInLibrary">
+      <Property Name="Title" Value="Leave Management Dashboard" />
+      <Property Name="ContentTypeId" Value="0x010100C568DB52D9D0A14D9B2FDCC96666E9F2007948130EC3DB064584E219954237AF3900242457EFB8B24247815D688C526CD44D" />
+    </File>
+    
+    <File Path="TeamCalendar.aspx" Url="TeamCalendar.aspx" Type="GhostableInLibrary">
+      <Property Name="Title" Value="Team Leave Calendar" />
+      <Property Name="ContentTypeId" Value="0x010100C568DB52D9D0A14D9B2FDCC96666E9F2007948130EC3DB064584E219954237AF3900242457EFB8B24247815D688C526CD44D" />
+    </File>
+  </Module>
+
+  <!-- Permissions -->
+  <CustomAction
+    Id="LeaveManagementPermissions"
+    Location="ScriptLink"
+    Sequence="100">
+    <ScriptSrc>~sitecollection/_layouts/15/sp.js</ScriptSrc>
+  </CustomAction>
+
+</Elements>

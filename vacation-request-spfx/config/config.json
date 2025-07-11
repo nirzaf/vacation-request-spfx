@@ -25,12 +25,21 @@
           "manifest": "./src/webparts/leaveHistory/LeaveHistoryWebPart.manifest.json"
         }
       ]
+    },
+    "leave-administration-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/leaveAdministration/LeaveAdministrationWebPart.js",
+          "manifest": "./src/webparts/leaveAdministration/LeaveAdministrationWebPart.manifest.json"
+        }
+      ]
     }
   },
   "externals": {},
   "localizedResources": {
     "LeaveRequestFormWebPartStrings": "lib/webparts/leaveRequestForm/loc/{locale}.js",
     "TeamCalendarWebPartStrings": "lib/webparts/teamCalendar/loc/{locale}.js",
-    "LeaveHistoryWebPartStrings": "lib/webparts/leaveHistory/loc/{locale}.js"
+    "LeaveHistoryWebPartStrings": "lib/webparts/leaveHistory/loc/{locale}.js",
+    "LeaveAdministrationWebPartStrings": "lib/webparts/leaveAdministration/loc/{locale}.js"
   }
 }
